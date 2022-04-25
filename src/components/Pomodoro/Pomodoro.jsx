@@ -7,7 +7,12 @@ class Pomodoro extends Component {
   }
 
   render() {
-    return <div id="break-label">Break Length</div>;
+    return (
+      <div>
+        <div id="break-label">Break Time</div>
+        <div id="session-label">Session Time</div>
+      </div>
+    );
   }
 }
 
