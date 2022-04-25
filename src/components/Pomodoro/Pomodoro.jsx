@@ -13,10 +13,16 @@ class Pomodoro extends Component {
           -
         </button>
         <div id="break-label">Break Time</div>
+        <button id="break-increment" type="button">
+          +
+        </button>
         <button id="session-decrement" type="button">
           -
         </button>
         <div id="session-label">Session Time</div>
+        <button id="session-increment" type="button">
+          +
+        </button>
       </div>
     );
   }
