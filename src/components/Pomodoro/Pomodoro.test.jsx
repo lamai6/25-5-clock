@@ -44,4 +44,12 @@ describe('Product backlog test suite', () => {
     expect(breakIncrement).toBeInTheDocument();
     expect(sessionIncrement).toBeInTheDocument();
   });
+
+  it('should display an element with id="break-length", which displays on load a value of 5 (US#5)', () => {
+    const { container } = render(<Pomodoro />);
+    const breakTime = container.querySelector('span[id=break-length]');
+
+    expect(breakTime).toBeInTheDocument();
+    expect(breakTime).toHaveTextContent('5');
+  });
 });
