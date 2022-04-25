@@ -18,4 +18,17 @@ describe('Product backlog test suite', () => {
     expect(sessionLabel).toBeInTheDocument();
     expect(sessionLabel).toHaveTextContent('Session Time');
   });
+
+  it('should display 2 clickable elements with id="break-decrement" and id="session-decrement" (US#3)', () => {
+    const { container } = render(<Pomodoro />);
+    const breakDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+
+    expect(breakDecrement).toBeInTheDocument();
+    expect(sessionDecrement).toBeInTheDocument();
+  });
 });
