@@ -52,4 +52,12 @@ describe('Product backlog test suite', () => {
     expect(breakTime).toBeInTheDocument();
     expect(breakTime).toHaveTextContent('5');
   });
+
+  it('should display an element with id="session-length", which displays on load a value of 25 (US#6)', () => {
+    const { container } = render(<Pomodoro />);
+    const sessionTime = container.querySelector('span[id=session-length]');
+
+    expect(sessionTime).toBeInTheDocument();
+    expect(sessionTime).toHaveTextContent('25');
+  });
 });
