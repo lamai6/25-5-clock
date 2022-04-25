@@ -22,7 +22,7 @@ describe('Product backlog test suite', () => {
   it('should display 2 clickable elements with id="break-decrement" and id="session-decrement" (US#3)', () => {
     const { container } = render(<Pomodoro />);
     const breakDecrement = container.querySelector(
-      'button[id=session-decrement]'
+      'button[id=break-decrement]'
     );
     const sessionDecrement = container.querySelector(
       'button[id=session-decrement]'
@@ -30,5 +30,18 @@ describe('Product backlog test suite', () => {
 
     expect(breakDecrement).toBeInTheDocument();
     expect(sessionDecrement).toBeInTheDocument();
+  });
+
+  it('should display 2 clickable elements with id="break-increment" and id="session-increment" (US#4)', () => {
+    const { container } = render(<Pomodoro />);
+    const breakIncrement = container.querySelector(
+      'button[id=break-increment]'
+    );
+    const sessionIncrement = container.querySelector(
+      'button[id=session-increment]'
+    );
+
+    expect(breakIncrement).toBeInTheDocument();
+    expect(sessionIncrement).toBeInTheDocument();
   });
 });
