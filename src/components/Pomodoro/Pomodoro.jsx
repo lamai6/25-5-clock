@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import BreakTime from '../BreakTime/BreakTime';
 
 class Pomodoro extends Component {
   constructor(props) {
@@ -9,17 +10,11 @@ class Pomodoro extends Component {
   render() {
     return (
       <div>
-        <button id="break-decrement" type="button">
-          -
-        </button>
-        <div id="break-label">Break Time</div>
-        <button id="break-increment" type="button">
-          +
-        </button>
+        <BreakTime />
+        <div id="session-label">Session Time</div>
         <button id="session-decrement" type="button">
           -
         </button>
-        <div id="session-label">Session Time</div>
         <button id="session-increment" type="button">
           +
         </button>
