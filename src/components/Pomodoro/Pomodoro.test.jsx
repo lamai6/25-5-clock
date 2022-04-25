@@ -45,7 +45,7 @@ describe('Product backlog test suite', () => {
     expect(sessionIncrement).toBeInTheDocument();
   });
 
-  it('should display an element with id="break-length", which displays on load a value of 5 (US#5)', () => {
+  it('should display an element with id="break-length", that displays on load a value of 5 (US#5)', () => {
     const { container } = render(<Pomodoro />);
     const breakTime = container.querySelector('span[id=break-length]');
 
@@ -53,11 +53,19 @@ describe('Product backlog test suite', () => {
     expect(breakTime).toHaveTextContent('5');
   });
 
-  it('should display an element with id="session-length", which displays on load a value of 25 (US#6)', () => {
+  it('should display an element with id="session-length", that displays on load a value of 25 (US#6)', () => {
     const { container } = render(<Pomodoro />);
     const sessionTime = container.querySelector('span[id=session-length]');
 
     expect(sessionTime).toBeInTheDocument();
     expect(sessionTime).toHaveTextContent('25');
+  });
+
+  it('should display an element with id="timer-label" containing on load "Session" text (US#7)', () => {
+    const { container } = render(<Pomodoro />);
+    const sessionTime = container.querySelector('span[id=timer-label]');
+
+    expect(sessionTime).toBeInTheDocument();
+    expect(sessionTime).toHaveTextContent('Session');
   });
 });
