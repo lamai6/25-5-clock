@@ -1,4 +1,5 @@
 import { Component } from 'react';
+import Pomodoro from '../Pomodoro/Pomodoro';
 import './App.styles.scss';
 
 class App extends Component {
@@ -8,7 +9,7 @@ class App extends Component {
   }
 
   render() {
-    return <div />;
+    return <Pomodoro />;
   }
 }
 
