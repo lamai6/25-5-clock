@@ -6,15 +6,24 @@ import Display from '../Display/Display';
 class Pomodoro extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      minute: 25,
+      second: 0,
+    };
+    this.setTime = this.setTime.bind(this);
+  }
+
+  setTime(minute, second) {
+    this.setState(() => ({ minute, second }));
   }
 
   render() {
+    const { minute, second } = this.state;
     return (
       <div>
         <BreakTime />
         <SessionTime />
-        <Display />
+        <Display minute={minute} second={second} />
       </div>
     );
   }
