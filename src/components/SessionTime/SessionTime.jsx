@@ -7,6 +7,10 @@ function SessionTime() {
     setTime((prevTime) => prevTime - 1);
   };
 
+  const incrementTime = () => {
+    setTime((prevTime) => prevTime + 1);
+  };
+
   return (
     <div>
       <div id="session-label">Session Time</div>
@@ -14,7 +18,7 @@ function SessionTime() {
         -
       </button>
       <span id="session-length">{time}</span>
-      <button id="session-increment" type="button">
+      <button onClick={incrementTime} id="session-increment" type="button">
         +
       </button>
     </div>
