@@ -68,4 +68,12 @@ describe('Product backlog test suite', () => {
     expect(sessionTime).toBeInTheDocument();
     expect(sessionTime).toHaveTextContent('Session');
   });
+
+  it('should display an element with id="time-left" containing a value displayed in mm:ss format (US#8)', () => {
+    const { container } = render(<Pomodoro />);
+    const timeLeft = container.querySelector('span[id=time-left]');
+
+    expect(timeLeft).toBeInTheDocument();
+    expect(timeLeft.innerHTML).toMatch(/^\d{2}:\d{2}$/);
+  });
 });
