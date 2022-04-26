@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Pomodoro from './Pomodoro';
 
@@ -89,5 +89,21 @@ describe('Product backlog test suite', () => {
     const resetButton = container.querySelector('button[id=reset]');
 
     expect(resetButton).toBeInTheDocument();
+  });
+
+  // US#11 should be tested logically after US#21
+
+  it('should decrement by 1 #break-length element when clicking on #break-decrement button (US#12)', () => {
+    const { container } = render(<Pomodoro />);
+    const breakTime = container.querySelector('span[id=break-length]');
+    const breakDecrement = container.querySelector(
+      'button[id=break-decrement]'
+    );
+
+    expect(breakTime).toHaveTextContent('5');
+
+    fireEvent.click(breakDecrement);
+
+    expect(breakTime).toHaveTextContent('4');
   });
 });
