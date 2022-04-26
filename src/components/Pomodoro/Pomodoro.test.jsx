@@ -120,4 +120,18 @@ describe('Product backlog test suite', () => {
 
     expect(breakTime).toHaveTextContent('6');
   });
+
+  it('should decrement by 1 #session-length element when clicking on #session-decrement button (US#14)', () => {
+    const { container } = render(<Pomodoro />);
+    const sessionTime = container.querySelector('span[id=session-length]');
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+
+    expect(sessionTime).toHaveTextContent('25');
+
+    fireEvent.click(sessionDecrement);
+
+    expect(sessionTime).toHaveTextContent('24');
+  });
 });
