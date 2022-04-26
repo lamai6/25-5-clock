@@ -76,4 +76,11 @@ describe('Product backlog test suite', () => {
     expect(timeLeft).toBeInTheDocument();
     expect(timeLeft.innerHTML).toMatch(/^\d{2}:\d{2}$/);
   });
+
+  it('should display a clickable element with id="start_stop" (US#9)', () => {
+    const { container } = render(<Pomodoro />);
+    const startStopButton = container.querySelector('button[id=start_stop]');
+
+    expect(startStopButton).toBeInTheDocument();
+  });
 });
