@@ -176,4 +176,32 @@ describe('Product backlog test suite', () => {
 
     expect(sessionTime).toHaveTextContent('1');
   });
+
+  it('should not increment #break-length element above 60 (US#17)', () => {
+    const { container } = render(<Pomodoro />);
+    const breakTime = container.querySelector('span[id=break-length]');
+    const breakIncrement = container.querySelector(
+      'button[id=break-increment]'
+    );
+
+    [...Array(60)].forEach(() => {
+      fireEvent.click(breakIncrement);
+    });
+
+    expect(breakTime).toHaveTextContent('60');
+  });
+
+  it('should not increment #session-length element above 60 (US#17)', () => {
+    const { container } = render(<Pomodoro />);
+    const sessionTime = container.querySelector('span[id=session-length]');
+    const sessionIncrement = container.querySelector(
+      'button[id=session-increment]'
+    );
+
+    [...Array(40)].forEach(() => {
+      fireEvent.click(sessionIncrement);
+    });
+
+    expect(sessionTime).toHaveTextContent('60');
+  });
 });
