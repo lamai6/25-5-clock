@@ -106,4 +106,18 @@ describe('Product backlog test suite', () => {
 
     expect(breakTime).toHaveTextContent('4');
   });
+
+  it('should increment by 1 #break-length element when clicking on #break-increment button (US#13)', () => {
+    const { container } = render(<Pomodoro />);
+    const breakTime = container.querySelector('span[id=break-length]');
+    const breakIncrement = container.querySelector(
+      'button[id=break-increment]'
+    );
+
+    expect(breakTime).toHaveTextContent('5');
+
+    fireEvent.click(breakIncrement);
+
+    expect(breakTime).toHaveTextContent('6');
+  });
 });
