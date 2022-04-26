@@ -8,7 +8,7 @@ function SessionTime() {
   };
 
   const incrementTime = () => {
-    setTime((prevTime) => prevTime + 1);
+    if (time < 60) setTime((prevTime) => prevTime + 1);
   };
 
   return (
