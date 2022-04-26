@@ -4,7 +4,7 @@ function SessionTime() {
   const [time, setTime] = useState(25);
 
   const decrementTime = () => {
-    setTime((prevTime) => prevTime - 1);
+    if (time > 1) setTime((prevTime) => prevTime - 1);
   };
 
   const incrementTime = () => {
