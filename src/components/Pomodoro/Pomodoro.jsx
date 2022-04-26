@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import BreakTime from '../BreakTime/BreakTime';
 import SessionTime from '../SessionTime/SessionTime';
+import TimeControl from '../TimeControl/TimeControl';
 import Display from '../Display/Display';
 
 class Pomodoro extends Component {
@@ -24,6 +25,7 @@ class Pomodoro extends Component {
         <BreakTime />
         <SessionTime />
         <Display minute={minute} second={second} />
+        <TimeControl />
       </div>
     );
   }
