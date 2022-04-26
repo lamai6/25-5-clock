@@ -83,4 +83,11 @@ describe('Product backlog test suite', () => {
 
     expect(startStopButton).toBeInTheDocument();
   });
+
+  it('should display a clickable element with id="reset" (US#10)', () => {
+    const { container } = render(<Pomodoro />);
+    const resetButton = container.querySelector('button[id=reset]');
+
+    expect(resetButton).toBeInTheDocument();
+  });
 });
