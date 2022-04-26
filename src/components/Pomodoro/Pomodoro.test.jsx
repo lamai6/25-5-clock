@@ -134,4 +134,18 @@ describe('Product backlog test suite', () => {
 
     expect(sessionTime).toHaveTextContent('24');
   });
+
+  it('should increment by 1 #session-length element when clicking on #session-increment button (US#15)', () => {
+    const { container } = render(<Pomodoro />);
+    const sessionTime = container.querySelector('span[id=session-length]');
+    const sessionIncrement = container.querySelector(
+      'button[id=session-increment]'
+    );
+
+    expect(sessionTime).toHaveTextContent('25');
+
+    fireEvent.click(sessionIncrement);
+
+    expect(sessionTime).toHaveTextContent('26');
+  });
 });
