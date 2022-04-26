@@ -7,6 +7,10 @@ function BreakTime() {
     setTime((prevTime) => prevTime - 1);
   };
 
+  const incrementTime = () => {
+    setTime((prevTime) => prevTime + 1);
+  };
+
   return (
     <div>
       <div id="break-label">Break Time</div>
@@ -14,7 +18,7 @@ function BreakTime() {
         -
       </button>
       <span id="break-length">{time}</span>
-      <button id="break-increment" type="button">
+      <button onClick={incrementTime} id="break-increment" type="button">
         +
       </button>
     </div>
