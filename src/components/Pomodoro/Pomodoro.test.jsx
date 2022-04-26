@@ -148,4 +148,32 @@ describe('Product backlog test suite', () => {
 
     expect(sessionTime).toHaveTextContent('26');
   });
+
+  it('should not decrement #break-length element under 1 (US#16)', () => {
+    const { container } = render(<Pomodoro />);
+    const breakTime = container.querySelector('span[id=break-length]');
+    const breakDecrement = container.querySelector(
+      'button[id=break-decrement]'
+    );
+
+    [...Array(10)].forEach(() => {
+      fireEvent.click(breakDecrement);
+    });
+
+    expect(breakTime).toHaveTextContent('1');
+  });
+
+  it('should not decrement #session-length element under 1 (US#16)', () => {
+    const { container } = render(<Pomodoro />);
+    const sessionTime = container.querySelector('span[id=session-length]');
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+
+    [...Array(30)].forEach(() => {
+      fireEvent.click(sessionDecrement);
+    });
+
+    expect(sessionTime).toHaveTextContent('1');
+  });
 });
