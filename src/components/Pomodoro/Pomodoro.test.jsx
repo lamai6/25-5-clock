@@ -247,4 +247,24 @@ describe('Product backlog test suite', () => {
 
     jest.useRealTimers();
   });
+
+  it('should pause the timer when clicking on #start_stop element if the timer is running (US#20)', async () => {
+    jest.useFakeTimers();
+
+    const { container } = render(<Pomodoro />);
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const timeLeft = container.querySelector('span[id=time-left]');
+
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(5000);
+    fireEvent.click(startStopButton);
+
+    expect(timeLeft).toHaveTextContent('24:55');
+
+    jest.advanceTimersByTime(5000);
+
+    expect(timeLeft).toHaveTextContent('24:55');
+
+    jest.useRealTimers();
+  });
 });
