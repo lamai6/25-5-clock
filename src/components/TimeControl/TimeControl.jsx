@@ -1,7 +1,9 @@
-function TimeControl() {
+import PropTypes from 'prop-types';
+
+function TimeControl({ toggleTimerRunning }) {
   return (
     <div>
-      <button id="start_stop" type="button">
+      <button onClick={toggleTimerRunning} id="start_stop" type="button">
         Start / Stop
       </button>
       <button id="reset" type="button">
@@ -10,5 +12,9 @@ function TimeControl() {
     </div>
   );
 }
+
+TimeControl.propTypes = {
+  toggleTimerRunning: PropTypes.func.isRequired,
+};
 
 export default TimeControl;

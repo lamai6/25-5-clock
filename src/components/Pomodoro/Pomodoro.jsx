@@ -8,24 +8,38 @@ class Pomodoro extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      minute: 25,
-      second: 0,
+      sessionTime: 0,
+      shouldRunning: false,
     };
-    this.setTime = this.setTime.bind(this);
+    this.setSessionTime = this.setSessionTime.bind(this);
+    this.decrementSessionTime = this.decrementSessionTime.bind(this);
+    this.toggleTimerRunning = this.toggleTimerRunning.bind(this);
   }
 
-  setTime(minute, second) {
-    this.setState(() => ({ minute, second }));
+  setSessionTime(sessionTime) {
+    this.setState(() => ({ sessionTime }));
+  }
+
+  decrementSessionTime() {
+    this.setState(({ sessionTime }) => ({ sessionTime: sessionTime - 1 }));
+  }
+
+  toggleTimerRunning() {
+    this.setState(({ shouldRunning }) => ({ shouldRunning: !shouldRunning }));
   }
 
   render() {
-    const { minute, second } = this.state;
+    const { sessionTime, shouldRunning } = this.state;
     return (
       <div>
         <BreakTime />
-        <SessionTime />
-        <Display minute={minute} second={second} />
-        <TimeControl />
+        <SessionTime
+          shouldRunning={shouldRunning}
+          setTime={this.setSessionTime}
+          decrementTime={this.decrementSessionTime}
+        />
+        <Display time={sessionTime} />
+        <TimeControl toggleTimerRunning={this.toggleTimerRunning} />
       </div>
     );
   }
