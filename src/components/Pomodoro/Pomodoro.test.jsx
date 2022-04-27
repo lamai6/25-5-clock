@@ -207,6 +207,7 @@ describe('Product backlog test suite', () => {
 
   it('should run the timer from #session-length value when clicking on #start_stop button (US#18)', async () => {
     jest.useFakeTimers();
+
     const { container } = render(<Pomodoro />);
     const sessionDecrement = container.querySelector(
       'button[id=session-decrement]'
@@ -225,6 +226,24 @@ describe('Product backlog test suite', () => {
     fireEvent.click(startStopButton);
 
     expect(timeLeft).toHaveTextContent('09:40');
+
+    jest.useRealTimers();
+  });
+
+  it('should display the remaining time in mm:ss in #time-left element when the timer is running (US#19)', async () => {
+    jest.useFakeTimers();
+
+    const { container } = render(<Pomodoro />);
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const timeLeft = container.querySelector('span[id=time-left]');
+
+    fireEvent.click(startStopButton);
+
+    jest.advanceTimersByTime(5000);
+
+    expect(timeLeft.innerHTML).toMatch(/^\d{2}:\d{2}$/);
+
+    fireEvent.click(startStopButton);
 
     jest.useRealTimers();
   });
