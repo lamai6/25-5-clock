@@ -204,4 +204,28 @@ describe('Product backlog test suite', () => {
 
     expect(sessionTime).toHaveTextContent('60');
   });
+
+  it('should run the timer from #session-length value when clicking on #start_stop button (US#18)', async () => {
+    jest.useFakeTimers();
+    const { container } = render(<Pomodoro />);
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const timeLeft = container.querySelector('span[id=time-left]');
+
+    [...Array(15)].forEach(() => {
+      fireEvent.click(sessionDecrement);
+    });
+
+    fireEvent.click(startStopButton);
+
+    jest.advanceTimersByTime(20000);
+
+    fireEvent.click(startStopButton);
+
+    expect(timeLeft).toHaveTextContent('09:40');
+
+    jest.useRealTimers();
+  });
 });
