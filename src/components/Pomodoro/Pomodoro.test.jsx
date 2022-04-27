@@ -205,7 +205,7 @@ describe('Product backlog test suite', () => {
     expect(sessionTime).toHaveTextContent('60');
   });
 
-  it('should run the timer from #session-length value when clicking on #start_stop button (US#18)', async () => {
+  it('should run the timer from #session-length value when clicking on #start_stop button (US#18)', () => {
     jest.useFakeTimers();
 
     const { container } = render(<Pomodoro />);
@@ -230,7 +230,7 @@ describe('Product backlog test suite', () => {
     jest.useRealTimers();
   });
 
-  it('should display the remaining time in mm:ss in #time-left element when the timer is running (US#19)', async () => {
+  it('should display the remaining time in mm:ss in #time-left element when the timer is running (US#19)', () => {
     jest.useFakeTimers();
 
     const { container } = render(<Pomodoro />);
@@ -248,7 +248,7 @@ describe('Product backlog test suite', () => {
     jest.useRealTimers();
   });
 
-  it('should pause the timer when clicking on #start_stop element if the timer is running (US#20)', async () => {
+  it('should pause the timer when clicking on #start_stop element if the timer is running (US#20)', () => {
     jest.useFakeTimers();
 
     const { container } = render(<Pomodoro />);
@@ -264,6 +264,28 @@ describe('Product backlog test suite', () => {
     jest.advanceTimersByTime(5000);
 
     expect(timeLeft).toHaveTextContent('24:55');
+
+    jest.useRealTimers();
+  });
+
+  it('should resume the timer when clicking on #start_stop element if the timer is paused (US#21)', () => {
+    jest.useFakeTimers();
+
+    const { container } = render(<Pomodoro />);
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const timeLeft = container.querySelector('span[id=time-left]');
+
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(5000);
+    fireEvent.click(startStopButton);
+
+    expect(timeLeft).toHaveTextContent('24:55');
+
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(5000);
+    fireEvent.click(startStopButton);
+
+    expect(timeLeft).toHaveTextContent('24:50');
 
     jest.useRealTimers();
   });
