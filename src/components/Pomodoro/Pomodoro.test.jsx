@@ -91,7 +91,30 @@ describe('Product backlog test suite', () => {
     expect(resetButton).toBeInTheDocument();
   });
 
-  // US#11 should be tested logically after US#21
+  it('should stop the timer, set #break-length to 5 and #session-length to 25, reset #time-left to default state when clicking on #reset element (US#11)', () => {
+    jest.useFakeTimers();
+
+    const { container } = render(<Pomodoro />);
+    const breakTime = container.querySelector('span[id=break-length]');
+    const sessionTime = container.querySelector('span[id=session-length]');
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const resetButton = container.querySelector('button[id=reset]');
+    const timeLeft = container.querySelector('span[id=time-left]');
+    const sessionIncrement = container.querySelector(
+      'button[id=session-increment]'
+    );
+
+    fireEvent.click(sessionIncrement);
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(5000);
+    fireEvent.click(resetButton);
+
+    expect(breakTime).toHaveTextContent('5');
+    expect(sessionTime).toHaveTextContent('25');
+    expect(timeLeft).toHaveTextContent('25:00');
+
+    jest.useRealTimers();
+  });
 
   it('should decrement by 1 #break-length element when clicking on #break-decrement button (US#12)', () => {
     const { container } = render(<Pomodoro />);
