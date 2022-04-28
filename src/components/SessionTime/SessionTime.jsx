@@ -1,8 +1,15 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function SessionTime({ setTime, decrementTime, shouldRunning }) {
-  const [sessionTime, useSessionTime] = useState(1500); // 25 minutes = 1500 seconds
+function SessionTime({
+  setTime,
+  decrementTime,
+  shouldRunning,
+  toggleTimerRunning,
+  shouldResetTimer,
+}) {
+  const defaultTime = 1500; // 25 minutes = 1500 seconds
+  const [sessionTime, useSessionTime] = useState(defaultTime);
   const [intervalId, setIntervalId] = useState('');
 
   const decrementSessionTime = () => {
@@ -30,6 +37,7 @@ function SessionTime({ setTime, decrementTime, shouldRunning }) {
 
   const clearTimer = () => {
     clearInterval(intervalId);
+    setIntervalId('');
   };
 
   useEffect(() => {
@@ -37,6 +45,17 @@ function SessionTime({ setTime, decrementTime, shouldRunning }) {
     else clearTimer();
     // return clearTimer();
   }, [shouldRunning]);
+
+  const resetTimer = () => {
+    clearTimer();
+    useSessionTime(defaultTime);
+    if (sessionTime === defaultTime) setTime(defaultTime);
+    if (shouldRunning) toggleTimerRunning();
+  };
+
+  useEffect(() => {
+    resetTimer();
+  }, [shouldResetTimer]);
 
   return (
     <div>
@@ -64,6 +83,8 @@ SessionTime.propTypes = {
   setTime: PropTypes.func.isRequired,
   decrementTime: PropTypes.func.isRequired,
   shouldRunning: PropTypes.bool.isRequired,
+  toggleTimerRunning: PropTypes.func.isRequired,
+  shouldResetTimer: PropTypes.bool.isRequired,
 };
 
 export default SessionTime;
