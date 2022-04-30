@@ -312,4 +312,34 @@ describe('Product backlog test suite', () => {
 
     jest.useRealTimers();
   });
+
+  it('should start a new countdown and display "Break" in #timer-label element when session countdown reaches 0 (US#22)', () => {
+    jest.useFakeTimers();
+
+    const { container } = render(<Pomodoro />);
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const timeLeft = container.querySelector('span[id=time-left]');
+    const timerLabel = container.querySelector('span[id=timer-label]');
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+
+    [...Array(24)].forEach(() => {
+      fireEvent.click(sessionDecrement);
+    });
+
+    expect(timerLabel).toHaveTextContent('Session');
+    expect(timeLeft).toHaveTextContent('01:00');
+
+    fireEvent.click(startStopButton);
+
+    jest.advanceTimersByTime(72000);
+
+    fireEvent.click(startStopButton);
+
+    expect(timerLabel).toHaveTextContent('Break');
+    expect(timeLeft).toHaveTextContent('04:50');
+
+    jest.useRealTimers();
+  });
 });
