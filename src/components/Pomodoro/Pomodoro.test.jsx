@@ -2,6 +2,14 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Pomodoro from './Pomodoro';
 
+beforeEach(() => {
+  jest.useFakeTimers();
+});
+
+afterEach(() => {
+  jest.useRealTimers();
+});
+
 describe('Product backlog test suite', () => {
   it('should display an element with "break-label" id containing "Break Time" text (US#1)', () => {
     const { container } = render(<Pomodoro />);
@@ -92,8 +100,6 @@ describe('Product backlog test suite', () => {
   });
 
   it('should stop the timer, set #break-length to 5 and #session-length to 25, reset #time-left to default state when clicking on #reset element (US#11)', () => {
-    jest.useFakeTimers();
-
     const { container } = render(<Pomodoro />);
     const breakTime = container.querySelector('span[id=break-length]');
     const sessionTime = container.querySelector('span[id=session-length]');
@@ -112,8 +118,6 @@ describe('Product backlog test suite', () => {
     expect(breakTime).toHaveTextContent('5');
     expect(sessionTime).toHaveTextContent('25');
     expect(timeLeft).toHaveTextContent('25:00');
-
-    jest.useRealTimers();
   });
 
   it('should decrement by 1 #break-length element when clicking on #break-decrement button (US#12)', () => {
@@ -229,8 +233,6 @@ describe('Product backlog test suite', () => {
   });
 
   it('should run the timer from #session-length value when clicking on #start_stop button (US#18)', () => {
-    jest.useFakeTimers();
-
     const { container } = render(<Pomodoro />);
     const sessionDecrement = container.querySelector(
       'button[id=session-decrement]'
@@ -249,13 +251,9 @@ describe('Product backlog test suite', () => {
     fireEvent.click(startStopButton);
 
     expect(timeLeft).toHaveTextContent('09:40');
-
-    jest.useRealTimers();
   });
 
   it('should display the remaining time in mm:ss in #time-left element when the timer is running (US#19)', () => {
-    jest.useFakeTimers();
-
     const { container } = render(<Pomodoro />);
     const startStopButton = container.querySelector('button[id=start_stop]');
     const timeLeft = container.querySelector('span[id=time-left]');
@@ -267,13 +265,9 @@ describe('Product backlog test suite', () => {
     expect(timeLeft.innerHTML).toMatch(/^\d{2}:\d{2}$/);
 
     fireEvent.click(startStopButton);
-
-    jest.useRealTimers();
   });
 
   it('should pause the timer when clicking on #start_stop element if the timer is running (US#20)', () => {
-    jest.useFakeTimers();
-
     const { container } = render(<Pomodoro />);
     const startStopButton = container.querySelector('button[id=start_stop]');
     const timeLeft = container.querySelector('span[id=time-left]');
@@ -287,13 +281,9 @@ describe('Product backlog test suite', () => {
     jest.advanceTimersByTime(5000);
 
     expect(timeLeft).toHaveTextContent('24:55');
-
-    jest.useRealTimers();
   });
 
   it('should resume the timer when clicking on #start_stop element if the timer is paused (US#21)', () => {
-    jest.useFakeTimers();
-
     const { container } = render(<Pomodoro />);
     const startStopButton = container.querySelector('button[id=start_stop]');
     const timeLeft = container.querySelector('span[id=time-left]');
@@ -309,13 +299,9 @@ describe('Product backlog test suite', () => {
     fireEvent.click(startStopButton);
 
     expect(timeLeft).toHaveTextContent('24:50');
-
-    jest.useRealTimers();
   });
 
   it('should start a new countdown and display "Break" in #timer-label element when session countdown reaches 0 (US#22)', () => {
-    jest.useFakeTimers();
-
     const { container } = render(<Pomodoro />);
     const startStopButton = container.querySelector('button[id=start_stop]');
     const timeLeft = container.querySelector('span[id=time-left]');
@@ -339,7 +325,5 @@ describe('Product backlog test suite', () => {
 
     expect(timerLabel).toHaveTextContent('Break');
     expect(timeLeft).toHaveTextContent('04:50');
-
-    jest.useRealTimers();
   });
 });
