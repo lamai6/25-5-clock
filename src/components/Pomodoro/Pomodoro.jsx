@@ -63,6 +63,9 @@ class Pomodoro extends Component {
 
   resetTimer() {
     this.setState(({ resetTimer }) => ({ resetTimer: !resetTimer }));
+    const { activeTime, shouldRunning } = this.state;
+    if (activeTime === 'break') this.switchActiveTime();
+    if (shouldRunning) this.toggleTimerRunning();
   }
 
   switchActiveTime() {

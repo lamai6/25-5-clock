@@ -5,7 +5,6 @@ function BreakTime({
   setTime,
   decrementTime,
   shouldRunning,
-  toggleTimerRunning,
   shouldResetTimer,
   activeTime,
 }) {
@@ -63,11 +62,10 @@ function BreakTime({
     clearTimer();
     useBreakTime(defaultTime);
     if (breakTime === defaultTime) setTime(defaultTime);
-    if (shouldRunning) toggleTimerRunning();
   };
 
   useEffect(() => {
-    if (timeName === activeTime) resetTimer();
+    resetTimer();
   }, [shouldResetTimer]);
 
   return (
@@ -88,7 +86,6 @@ BreakTime.propTypes = {
   setTime: PropTypes.func.isRequired,
   decrementTime: PropTypes.func.isRequired,
   shouldRunning: PropTypes.bool.isRequired,
-  toggleTimerRunning: PropTypes.func.isRequired,
   shouldResetTimer: PropTypes.bool.isRequired,
   activeTime: PropTypes.string.isRequired,
 };
