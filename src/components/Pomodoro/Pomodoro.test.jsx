@@ -105,19 +105,24 @@ describe('Product backlog test suite', () => {
     const sessionTime = container.querySelector('span[id=session-length]');
     const startStopButton = container.querySelector('button[id=start_stop]');
     const resetButton = container.querySelector('button[id=reset]');
+    const timerLabel = container.querySelector('span[id=timer-label]');
     const timeLeft = container.querySelector('span[id=time-left]');
-    const sessionIncrement = container.querySelector(
-      'button[id=session-increment]'
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
     );
 
-    fireEvent.click(sessionIncrement);
+    [...Array(24)].forEach(() => {
+      fireEvent.click(sessionDecrement);
+    });
+
     fireEvent.click(startStopButton);
-    jest.advanceTimersByTime(5000);
+    jest.advanceTimersByTime(72000);
     fireEvent.click(resetButton);
 
     expect(breakTime).toHaveTextContent('5');
     expect(sessionTime).toHaveTextContent('25');
     expect(timeLeft).toHaveTextContent('25:00');
+    expect(timerLabel).toHaveTextContent('Session');
   });
 
   it('should decrement by 1 #break-length element when clicking on #break-decrement button (US#12)', () => {
