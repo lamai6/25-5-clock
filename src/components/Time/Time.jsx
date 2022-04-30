@@ -1,37 +1,37 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-function BreakTime({
+function Time({
+  timeName,
+  defaultTime,
   setTime,
-  decrementTime,
+  decrementTimer,
   shouldRunning,
   shouldResetTimer,
   activeTime,
 }) {
-  const defaultTime = 300; // 5 minutes = 300 seconds
-  const timeName = 'break';
-  const [breakTime, useBreakTime] = useState(defaultTime);
+  const [time, useTime] = useState(defaultTime);
   const [intervalId, setIntervalId] = useState('');
 
-  const decrementBreakTime = () => {
-    if (breakTime > 60) {
-      useBreakTime(breakTime - 60);
+  const decrementTime = () => {
+    if (time > 60) {
+      useTime(time - 60);
     }
   };
 
-  const incrementBreakTime = () => {
-    if (breakTime < 3600) {
-      useBreakTime(breakTime + 60);
+  const incrementTime = () => {
+    if (time < 3600) {
+      useTime(time + 60);
     }
   };
 
   useEffect(() => {
-    if (timeName === activeTime) setTime(breakTime);
-  }, [breakTime]);
+    if (timeName === activeTime) setTime(time);
+  }, [time]);
 
   const runTimer = () => {
     const newIntervalId = setInterval(() => {
-      decrementTime();
+      decrementTimer();
     }, 1000);
     setIntervalId(newIntervalId);
   };
@@ -50,7 +50,7 @@ function BreakTime({
   }, [shouldRunning]);
 
   useEffect(() => {
-    setTime(breakTime);
+    setTime(time);
     if (shouldRunning) {
       if (timeName !== activeTime) {
         clearTimer();
@@ -60,8 +60,8 @@ function BreakTime({
 
   const resetTimer = () => {
     clearTimer();
-    useBreakTime(defaultTime);
-    if (breakTime === defaultTime) setTime(defaultTime);
+    useTime(defaultTime);
+    if (time === defaultTime) setTime(defaultTime);
   };
 
   useEffect(() => {
@@ -70,24 +70,36 @@ function BreakTime({
 
   return (
     <div>
-      <div id="break-label">Break Time</div>
-      <button onClick={decrementBreakTime} id="break-decrement" type="button">
+      <div id={`${timeName}-label`}>
+        {`${timeName[0].toUpperCase()}${timeName.slice(1)} Time`}
+      </div>
+      <button
+        onClick={decrementTime}
+        id={`${timeName}-decrement`}
+        type="button"
+      >
         -
       </button>
-      <span id="break-length">{breakTime / 60}</span>
-      <button onClick={incrementBreakTime} id="break-increment" type="button">
+      <span id={`${timeName}-length`}>{time / 60}</span>
+      <button
+        onClick={incrementTime}
+        id={`${timeName}-increment`}
+        type="button"
+      >
         +
       </button>
     </div>
   );
 }
 
-BreakTime.propTypes = {
+Time.propTypes = {
+  timeName: PropTypes.string.isRequired,
+  defaultTime: PropTypes.number.isRequired,
   setTime: PropTypes.func.isRequired,
-  decrementTime: PropTypes.func.isRequired,
+  decrementTimer: PropTypes.func.isRequired,
   shouldRunning: PropTypes.bool.isRequired,
   shouldResetTimer: PropTypes.bool.isRequired,
   activeTime: PropTypes.string.isRequired,
 };
 
-export default BreakTime;
+export default Time;

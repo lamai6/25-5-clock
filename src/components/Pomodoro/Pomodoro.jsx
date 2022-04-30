@@ -1,8 +1,7 @@
 import { Component } from 'react';
-import BreakTime from '../BreakTime/BreakTime';
-import SessionTime from '../SessionTime/SessionTime';
 import TimeControl from '../TimeControl/TimeControl';
 import Display from '../Display/Display';
+import Time from '../Time/Time';
 
 class Pomodoro extends Component {
   constructor(props) {
@@ -33,10 +32,7 @@ class Pomodoro extends Component {
 
   decrementBreakTime() {
     this.setState(
-      ({ breakTime }) => {
-        if (breakTime >= 0) return { breakTime: breakTime - 1 };
-        return null;
-      },
+      ({ breakTime }) => ({ breakTime: breakTime - 1 }),
       () => {
         const { breakTime } = this.state;
         if (breakTime < 0) this.switchActiveTime();
@@ -82,20 +78,24 @@ class Pomodoro extends Component {
     const time = activeTime === 'session' ? sessionTime : breakTime;
     return (
       <div>
-        <BreakTime
+        <Time
+          defaultTime={300} // 5 minutes = 300 seconds
+          timeName="break"
           shouldRunning={shouldRunning}
           toggleTimerRunning={this.toggleTimerRunning}
           shouldResetTimer={resetTimer}
           setTime={this.setBreakTime}
-          decrementTime={this.decrementBreakTime}
+          decrementTimer={this.decrementBreakTime}
           activeTime={activeTime}
         />
-        <SessionTime
+        <Time
+          defaultTime={1500} // 25 minutes = 1500 seconds
+          timeName="session"
           shouldRunning={shouldRunning}
           toggleTimerRunning={this.toggleTimerRunning}
           shouldResetTimer={resetTimer}
           setTime={this.setSessionTime}
-          decrementTime={this.decrementSessionTime}
+          decrementTimer={this.decrementSessionTime}
           activeTime={activeTime}
         />
         <Display time={time} activeTime={activeTime} />
