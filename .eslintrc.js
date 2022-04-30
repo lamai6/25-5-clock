@@ -18,6 +18,7 @@ module.exports = {
     'implicit-arrow-linebreak': 'off',
     'function-paren-newline': 'off',
     'no-confusing-arrow': 'off',
+    'operator-linebreak': ['error', 'before', { overrides: { '=': 'after' } }],
     'object-curly-newline': [
       'error',
       {

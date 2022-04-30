@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-function Display({ time }) {
+function Display({ time, activeTime }) {
   const minute = Math.floor(time / 60);
   const second = time % 60;
   const formattedMinute = minute < 10 ? `0${minute}` : minute;
@@ -8,7 +8,9 @@ function Display({ time }) {
 
   return (
     <div>
-      <span id="timer-label">Session</span>
+      <span id="timer-label">
+        {`${activeTime[0].toUpperCase()}${activeTime.slice(1)}`}
+      </span>
       <span id="time-left">{`${formattedMinute}:${formattedSecond}`}</span>
     </div>
   );
@@ -16,6 +18,7 @@ function Display({ time }) {
 
 Display.propTypes = {
   time: PropTypes.number.isRequired,
+  activeTime: PropTypes.string.isRequired,
 };
 
 export default Display;

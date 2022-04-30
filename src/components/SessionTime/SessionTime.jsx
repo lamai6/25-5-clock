@@ -7,8 +7,10 @@ function SessionTime({
   shouldRunning,
   toggleTimerRunning,
   shouldResetTimer,
+  activeTime,
 }) {
   const defaultTime = 1500; // 25 minutes = 1500 seconds
+  const timeName = 'session';
   const [sessionTime, useSessionTime] = useState(defaultTime);
   const [intervalId, setIntervalId] = useState('');
 
@@ -25,7 +27,7 @@ function SessionTime({
   };
 
   useEffect(() => {
-    setTime(sessionTime);
+    if (timeName === activeTime) setTime(sessionTime);
   }, [sessionTime]);
 
   const runTimer = () => {
@@ -41,10 +43,21 @@ function SessionTime({
   };
 
   useEffect(() => {
-    if (shouldRunning) runTimer();
-    else clearTimer();
+    if (timeName === activeTime) {
+      if (shouldRunning) runTimer();
+      else clearTimer();
+    }
     // return clearTimer();
   }, [shouldRunning]);
+
+  useEffect(() => {
+    setTime(sessionTime);
+    if (shouldRunning) {
+      if (timeName !== activeTime) {
+        clearTimer();
+      } else runTimer();
+    }
+  }, [activeTime]);
 
   const resetTimer = () => {
     clearTimer();
@@ -54,7 +67,7 @@ function SessionTime({
   };
 
   useEffect(() => {
-    resetTimer();
+    if (timeName === activeTime) resetTimer();
   }, [shouldResetTimer]);
 
   return (
@@ -85,6 +98,7 @@ SessionTime.propTypes = {
   shouldRunning: PropTypes.bool.isRequired,
   toggleTimerRunning: PropTypes.func.isRequired,
   shouldResetTimer: PropTypes.bool.isRequired,
+  activeTime: PropTypes.string.isRequired,
 };
 
 export default SessionTime;
