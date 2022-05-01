@@ -17,6 +17,7 @@ module.exports = {
       '@': path.resolve(__dirname, 'src'),
       '@fonts': path.resolve(__dirname, 'src/assets/fonts'),
       '@images': path.resolve(__dirname, 'src/assets/images'),
+      '@audio': path.resolve(__dirname, 'src/assets/audio'),
       '@components': path.resolve(__dirname, 'src/components'),
     },
   },
@@ -47,6 +48,13 @@ module.exports = {
         type: 'asset/resource',
         generator: {
           filename: 'fonts/[hash][ext][query]',
+        },
+      },
+      {
+        test: /\.(mp3|wav)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'audio/[hash][ext][query]',
         },
       },
     ],

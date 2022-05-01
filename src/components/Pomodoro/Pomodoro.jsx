@@ -2,6 +2,7 @@ import { Component } from 'react';
 import TimeControl from '../TimeControl/TimeControl';
 import Display from '../Display/Display';
 import Time from '../Time/Time';
+import Audio from '../Audio/Audio';
 
 class Pomodoro extends Component {
   constructor(props) {
@@ -87,6 +88,7 @@ class Pomodoro extends Component {
           runOrPauseTimer={this.runOrPauseTimer}
           resetTimer={this.resetTimer}
         />
+        <Audio activeTime={activeTime} shouldRunning={shouldRunning} />
       </div>
     );
   }
