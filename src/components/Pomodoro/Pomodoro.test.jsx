@@ -2,12 +2,22 @@ import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Pomodoro from './Pomodoro';
 
+beforeAll(() => {
+  global.playMock = jest
+    .spyOn(window.HTMLMediaElement.prototype, 'play')
+    .mockImplementation(() => {});
+});
+
 beforeEach(() => {
   jest.useFakeTimers();
 });
 
 afterEach(() => {
   jest.useRealTimers();
+});
+
+afterAll(() => {
+  global.playMock.mockRestore();
 });
 
 describe('Product backlog test suite', () => {
@@ -424,5 +434,23 @@ describe('Product backlog test suite', () => {
 
     expect(timerLabel).toHaveTextContent('Session');
     expect(timeLeft).toHaveTextContent('00:50');
+  });
+
+  it('should play a sound that have "beep" id when a countdown reaches 0 (US#26)', () => {
+    const { container } = render(<Pomodoro />);
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+
+    [...Array(24)].forEach(() => {
+      fireEvent.click(sessionDecrement);
+    });
+
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(70000);
+    fireEvent.click(startStopButton);
+
+    expect(global.playMock).toHaveBeenCalled();
   });
 });
