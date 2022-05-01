@@ -367,6 +367,35 @@ describe('Product backlog test suite', () => {
     const startStopButton = container.querySelector('button[id=start_stop]');
     const timeLeft = container.querySelector('span[id=time-left]');
     const timerLabel = container.querySelector('span[id=timer-label]');
+
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+
+    [...Array(24)].forEach(() => {
+      fireEvent.click(sessionDecrement);
+    });
+
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(72000);
+    fireEvent.click(startStopButton);
+
+    expect(timerLabel).toHaveTextContent('Break');
+    expect(timeLeft).toHaveTextContent('04:50');
+
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(302000);
+    fireEvent.click(startStopButton);
+
+    expect(timerLabel).toHaveTextContent('Session');
+    expect(timeLeft).toHaveTextContent('00:50');
+  });
+
+  it('should start a new countdown from the value displayed in #break-length when break countdown reaches 0 (US#25)', () => {
+    const { container } = render(<Pomodoro />);
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const timeLeft = container.querySelector('span[id=time-left]');
+    const timerLabel = container.querySelector('span[id=timer-label]');
     const breakDecrement = container.querySelector(
       'button[id=break-decrement]'
     );
