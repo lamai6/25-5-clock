@@ -361,4 +361,39 @@ describe('Product backlog test suite', () => {
     expect(timerLabel).toHaveTextContent('Break');
     expect(timeLeft).toHaveTextContent('01:50');
   });
+
+  it('should start a new countdown and display "Session" in #timer-label element when break countdown reaches 0 (US#24)', () => {
+    const { container } = render(<Pomodoro />);
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const timeLeft = container.querySelector('span[id=time-left]');
+    const timerLabel = container.querySelector('span[id=timer-label]');
+    const breakDecrement = container.querySelector(
+      'button[id=break-decrement]'
+    );
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+
+    [...Array(24)].forEach(() => {
+      fireEvent.click(sessionDecrement);
+    });
+
+    [...Array(4)].forEach(() => {
+      fireEvent.click(breakDecrement);
+    });
+
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(72000);
+    fireEvent.click(startStopButton);
+
+    expect(timerLabel).toHaveTextContent('Break');
+    expect(timeLeft).toHaveTextContent('00:50');
+
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(62000);
+    fireEvent.click(startStopButton);
+
+    expect(timerLabel).toHaveTextContent('Session');
+    expect(timeLeft).toHaveTextContent('00:50');
+  });
 });
