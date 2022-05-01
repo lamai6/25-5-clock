@@ -13,42 +13,28 @@ class Pomodoro extends Component {
       shouldRunning: false,
       resetTimer: true,
     };
-    this.setSessionTime = this.setSessionTime.bind(this);
-    this.decrementSessionTime = this.decrementSessionTime.bind(this);
-    this.setBreakTime = this.setBreakTime.bind(this);
-    this.decrementBreakTime = this.decrementBreakTime.bind(this);
+    this.setTime = this.setTime.bind(this);
+    this.decrementTime = this.decrementTime.bind(this);
     this.toggleTimerRunning = this.toggleTimerRunning.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
     this.switchActiveTime = this.switchActiveTime.bind(this);
   }
 
-  setBreakTime(breakTime) {
-    this.setState(() => ({ breakTime }));
+  setTime(timeType, time) {
+    const timeState = `${timeType}Time`;
+    this.setState(() => ({ [timeState]: time }));
   }
 
-  setSessionTime(sessionTime) {
-    this.setState(() => ({ sessionTime }));
-  }
-
-  decrementBreakTime() {
+  decrementTime() {
+    const { activeTime } = this.state;
+    const timeState = `${activeTime}Time`;
     this.setState(
-      ({ breakTime }) => ({ breakTime: breakTime - 1 }),
+      ({ [timeState]: time }) => ({
+        [timeState]: time - 1,
+      }),
       () => {
-        const { breakTime } = this.state;
-        if (breakTime < 0) this.switchActiveTime();
-      }
-    );
-  }
-
-  decrementSessionTime() {
-    this.setState(
-      ({ sessionTime }) => {
-        if (sessionTime >= 0) return { sessionTime: sessionTime - 1 };
-        return null;
-      },
-      () => {
-        const { sessionTime } = this.state;
-        if (sessionTime < 0) this.switchActiveTime();
+        const { [timeState]: time } = this.state;
+        if (time < 0) this.switchActiveTime();
       }
     );
   }
@@ -84,8 +70,8 @@ class Pomodoro extends Component {
           shouldRunning={shouldRunning}
           toggleTimerRunning={this.toggleTimerRunning}
           shouldResetTimer={resetTimer}
-          setTime={this.setBreakTime}
-          decrementTimer={this.decrementBreakTime}
+          setTime={this.setTime}
+          decrementTimer={this.decrementTime}
           activeTime={activeTime}
         />
         <Time
@@ -94,8 +80,8 @@ class Pomodoro extends Component {
           shouldRunning={shouldRunning}
           toggleTimerRunning={this.toggleTimerRunning}
           shouldResetTimer={resetTimer}
-          setTime={this.setSessionTime}
-          decrementTimer={this.decrementSessionTime}
+          setTime={this.setTime}
+          decrementTimer={this.decrementTime}
           activeTime={activeTime}
         />
         <Display time={time} activeTime={activeTime} />

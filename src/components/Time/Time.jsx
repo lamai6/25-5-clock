@@ -26,7 +26,7 @@ function Time({
   };
 
   useEffect(() => {
-    if (timeName === activeTime) setTime(time);
+    if (timeName === activeTime) setTime(timeName, time);
   }, [time]);
 
   const runTimer = () => {
@@ -50,7 +50,7 @@ function Time({
   }, [shouldRunning]);
 
   useEffect(() => {
-    setTime(time);
+    setTime(timeName, time);
     if (shouldRunning) {
       if (timeName !== activeTime) {
         clearTimer();
@@ -61,7 +61,7 @@ function Time({
   const resetTimer = () => {
     clearTimer();
     useTime(defaultTime);
-    if (time === defaultTime) setTime(defaultTime);
+    if (time === defaultTime) setTime(timeName, defaultTime);
   };
 
   useEffect(() => {
