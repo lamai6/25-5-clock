@@ -15,7 +15,7 @@ class Pomodoro extends Component {
     };
     this.setTime = this.setTime.bind(this);
     this.decrementTime = this.decrementTime.bind(this);
-    this.toggleTimerRunning = this.toggleTimerRunning.bind(this);
+    this.runOrPauseTimer = this.runOrPauseTimer.bind(this);
     this.resetTimer = this.resetTimer.bind(this);
     this.switchActiveTime = this.switchActiveTime.bind(this);
   }
@@ -39,7 +39,7 @@ class Pomodoro extends Component {
     );
   }
 
-  toggleTimerRunning() {
+  runOrPauseTimer() {
     this.setState(({ shouldRunning }) => ({ shouldRunning: !shouldRunning }));
   }
 
@@ -47,7 +47,7 @@ class Pomodoro extends Component {
     this.setState(({ resetTimer }) => ({ resetTimer: !resetTimer }));
     const { activeTime, shouldRunning } = this.state;
     if (activeTime === 'break') this.switchActiveTime();
-    if (shouldRunning) this.toggleTimerRunning();
+    if (shouldRunning) this.runOrPauseTimer();
   }
 
   switchActiveTime() {
@@ -68,7 +68,6 @@ class Pomodoro extends Component {
           defaultTime={300} // 5 minutes = 300 seconds
           timeName="break"
           shouldRunning={shouldRunning}
-          toggleTimerRunning={this.toggleTimerRunning}
           shouldResetTimer={resetTimer}
           setTime={this.setTime}
           decrementTimer={this.decrementTime}
@@ -78,7 +77,6 @@ class Pomodoro extends Component {
           defaultTime={1500} // 25 minutes = 1500 seconds
           timeName="session"
           shouldRunning={shouldRunning}
-          toggleTimerRunning={this.toggleTimerRunning}
           shouldResetTimer={resetTimer}
           setTime={this.setTime}
           decrementTimer={this.decrementTime}
@@ -86,7 +84,7 @@ class Pomodoro extends Component {
         />
         <Display time={time} activeTime={activeTime} />
         <TimeControl
-          toggleTimerRunning={this.toggleTimerRunning}
+          runOrPauseTimer={this.runOrPauseTimer}
           resetTimer={this.resetTimer}
         />
       </div>

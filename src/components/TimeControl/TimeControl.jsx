@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 
-function TimeControl({ toggleTimerRunning, resetTimer }) {
+function TimeControl({ runOrPauseTimer, resetTimer }) {
   return (
     <div>
-      <button onClick={toggleTimerRunning} id="start_stop" type="button">
+      <button onClick={runOrPauseTimer} id="start_stop" type="button">
         Start / Stop
       </button>
       <button onClick={resetTimer} id="reset" type="button">
@@ -14,7 +14,7 @@ function TimeControl({ toggleTimerRunning, resetTimer }) {
 }
 
 TimeControl.propTypes = {
-  toggleTimerRunning: PropTypes.func.isRequired,
+  runOrPauseTimer: PropTypes.func.isRequired,
   resetTimer: PropTypes.func.isRequired,
 };
 
