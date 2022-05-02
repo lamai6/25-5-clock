@@ -3,17 +3,22 @@ import { useRef } from 'react';
 import usePropsUpdate from '../../utils/usePropsUpdate';
 import soundUrl from '../../assets/audio/beep.mp3';
 
-function Audio({ activeTime, shouldRunning }) {
+function Audio({ activeTime, shouldRunning, shouldResetTimer }) {
   const audioRef = useRef(null);
 
   usePropsUpdate(async () => {
     if (shouldRunning) {
       const { current: audio } = audioRef;
-      await audio.play();
       audio.volume = 0.01;
       audio.currentTime = 0;
+      await audio.play();
     }
   }, [activeTime]);
+
+  usePropsUpdate(async () => {
+    const { current: audio } = audioRef;
+    await audio.pause();
+  }, [shouldResetTimer]);
 
   return (
     <div>
@@ -27,6 +32,7 @@ function Audio({ activeTime, shouldRunning }) {
 Audio.propTypes = {
   activeTime: PropTypes.string.isRequired,
   shouldRunning: PropTypes.bool.isRequired,
+  shouldResetTimer: PropTypes.bool.isRequired,
 };
 
 export default Audio;
