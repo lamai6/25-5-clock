@@ -139,6 +139,33 @@ describe('Product backlog test suite', () => {
     expect(timerLabel).toHaveTextContent('Session');
   });
 
+  it('should reset paused timer when clicking on reset button (US#11)', () => {
+    const { container } = render(<Pomodoro />);
+    const breakTime = container.querySelector('span[id=break-length]');
+    const sessionTime = container.querySelector('span[id=session-length]');
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const resetButton = container.querySelector('button[id=reset]');
+    const timerLabel = container.querySelector('span[id=timer-label]');
+    const timeLeft = container.querySelector('span[id=time-left]');
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+
+    [...Array(24)].forEach(() => {
+      fireEvent.click(sessionDecrement);
+    });
+
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(5000);
+    fireEvent.click(startStopButton);
+    fireEvent.click(resetButton);
+
+    expect(breakTime).toHaveTextContent('5');
+    expect(sessionTime).toHaveTextContent('25');
+    expect(timeLeft).toHaveTextContent('25:00');
+    expect(timerLabel).toHaveTextContent('Session');
+  });
+
   it('should decrement by 1 #break-length element when clicking on #break-decrement button (US#12)', () => {
     const { container } = render(<Pomodoro />);
     const breakTime = container.querySelector('span[id=break-length]');
