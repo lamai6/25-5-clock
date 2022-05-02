@@ -6,6 +6,9 @@ beforeAll(() => {
   global.playMock = jest
     .spyOn(window.HTMLMediaElement.prototype, 'play')
     .mockImplementation(() => {});
+  global.pauseMock = jest
+    .spyOn(window.HTMLMediaElement.prototype, 'pause')
+    .mockImplementation(() => {});
 });
 
 beforeEach(() => {
@@ -18,6 +21,7 @@ afterEach(() => {
 
 afterAll(() => {
   global.playMock.mockRestore();
+  global.pauseMock.mockRestore();
 });
 
 describe('Product backlog test suite', () => {
@@ -452,5 +456,25 @@ describe('Product backlog test suite', () => {
     fireEvent.click(startStopButton);
 
     expect(global.playMock).toHaveBeenCalled();
+  });
+
+  it('should stop playing #beep sound when clicking on reset button (US#28)', () => {
+    const { container } = render(<Pomodoro />);
+    const startStopButton = container.querySelector('button[id=start_stop]');
+    const resetButton = container.querySelector('button[id=reset]');
+    const sessionDecrement = container.querySelector(
+      'button[id=session-decrement]'
+    );
+
+    [...Array(24)].forEach(() => {
+      fireEvent.click(sessionDecrement);
+    });
+
+    fireEvent.click(startStopButton);
+    jest.advanceTimersByTime(70000);
+    fireEvent.click(resetButton);
+
+    expect(global.playMock).toHaveBeenCalled();
+    expect(global.pauseMock).toHaveBeenCalled();
   });
 });
