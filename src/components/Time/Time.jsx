@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowDown, faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import './Time.styles.scss';
 
 function Time({
   timeName,
@@ -69,25 +72,27 @@ function Time({
   }, [shouldResetTimer]);
 
   return (
-    <div>
+    <div className="time_container">
       <div id={`${timeName}-label`}>
         {`${timeName[0].toUpperCase()}${timeName.slice(1)} Time`}
       </div>
-      <button
-        onClick={decrementTime}
-        id={`${timeName}-decrement`}
-        type="button"
-      >
-        -
-      </button>
-      <span id={`${timeName}-length`}>{time / 60}</span>
-      <button
-        onClick={incrementTime}
-        id={`${timeName}-increment`}
-        type="button"
-      >
-        +
-      </button>
+      <div className="time_manager">
+        <button
+          onClick={decrementTime}
+          id={`${timeName}-decrement`}
+          type="button"
+        >
+          <FontAwesomeIcon icon={faArrowDown} />
+        </button>
+        <span id={`${timeName}-length`}>{time / 60}</span>
+        <button
+          onClick={incrementTime}
+          id={`${timeName}-increment`}
+          type="button"
+        >
+          <FontAwesomeIcon icon={faArrowUp} />
+        </button>
+      </div>
     </div>
   );
 }
