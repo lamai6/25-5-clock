@@ -3,6 +3,7 @@ import TimeControl from '../TimeControl/TimeControl';
 import Display from '../Display/Display';
 import Time from '../Time/Time';
 import Audio from '../Audio/Audio';
+import './Pomodoro.styles.scss';
 
 class Pomodoro extends Component {
   constructor(props) {
@@ -64,7 +65,7 @@ class Pomodoro extends Component {
       this.state;
     const time = activeTime === 'session' ? sessionTime : breakTime;
     return (
-      <div>
+      <div id="container">
         <Time
           defaultTime={300} // 5 minutes = 300 seconds
           timeName="break"
