@@ -66,6 +66,7 @@ class Pomodoro extends Component {
     const time = activeTime === 'session' ? sessionTime : breakTime;
     return (
       <div id="container">
+        <h1>25 + 5 Clock</h1>
         <Time
           defaultTime={300} // 5 minutes = 300 seconds
           timeName="break"
