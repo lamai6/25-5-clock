@@ -3,6 +3,7 @@ import TimeControl from '../TimeControl/TimeControl';
 import Display from '../Display/Display';
 import Time from '../Time/Time';
 import Audio from '../Audio/Audio';
+import GitHub from '../GitHub/GitHub';
 import './Pomodoro.styles.scss';
 
 class Pomodoro extends Component {
@@ -96,6 +97,7 @@ class Pomodoro extends Component {
           shouldRunning={shouldRunning}
           shouldResetTimer={resetTimer}
         />
+        <GitHub />
       </div>
     );
   }
