@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import './Display.styles.scss';
 
 function Display({ time, activeTime }) {
   const minute = Math.floor(time / 60);
@@ -7,11 +8,13 @@ function Display({ time, activeTime }) {
   const formattedSecond = second < 10 ? `0${second}` : second;
 
   return (
-    <div>
-      <span id="timer-label">
-        {`${activeTime[0].toUpperCase()}${activeTime.slice(1)}`}
-      </span>
-      <span id="time-left">{`${formattedMinute}:${formattedSecond}`}</span>
+    <div id="timer-container">
+      <div id="timer">
+        <span id="timer-label">
+          {`${activeTime[0].toUpperCase()}${activeTime.slice(1)}`}
+        </span>
+        <span id="time-left">{`${formattedMinute}:${formattedSecond}`}</span>
+      </div>
     </div>
   );
 }
