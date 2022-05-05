@@ -88,6 +88,7 @@ class Pomodoro extends Component {
         <TimeControl
           runOrPauseTimer={this.runOrPauseTimer}
           resetTimer={this.resetTimer}
+          shouldRunning={shouldRunning}
         />
         <Audio
           activeTime={activeTime}

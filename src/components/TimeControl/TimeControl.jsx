@@ -1,13 +1,18 @@
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlay, faPause, faRotate } from '@fortawesome/free-solid-svg-icons';
+import './TimeControl.styles.scss';
 
-function TimeControl({ runOrPauseTimer, resetTimer }) {
+function TimeControl({ runOrPauseTimer, resetTimer, shouldRunning }) {
+  const getIcon = () => (shouldRunning ? faPause : faPlay);
+
   return (
-    <div>
+    <div id="time-controls">
       <button onClick={runOrPauseTimer} id="start_stop" type="button">
-        Start / Stop
+        <FontAwesomeIcon icon={getIcon()} />
       </button>
       <button onClick={resetTimer} id="reset" type="button">
-        Reset
+        <FontAwesomeIcon icon={faRotate} />
       </button>
     </div>
   );
@@ -16,6 +21,7 @@ function TimeControl({ runOrPauseTimer, resetTimer }) {
 TimeControl.propTypes = {
   runOrPauseTimer: PropTypes.func.isRequired,
   resetTimer: PropTypes.func.isRequired,
+  shouldRunning: PropTypes.bool.isRequired,
 };
 
 export default TimeControl;
